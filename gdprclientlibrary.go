@@ -341,7 +341,7 @@ func (c *Client) CreateInfoRequest(input CreateInfoRequestInput) (*InfoRequest, 
 	}
 
 	if response.StatusCode != 200 {
-		return nil, fmt.Errorf("GDPR service returned error: %s", response.Message)
+		return nil, fmt.Errorf("GDPR service returned error: %s, StatusCode: %v", response.Message, response.StatusCode)
 	}
 
 	// Convert response.Data to InfoRequest
