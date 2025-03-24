@@ -336,8 +336,8 @@ func (c *Client) CreateInfoRequest(input CreateInfoRequestInput) (*InfoRequest, 
 	}
 
 	var response Response
-	if err := json.Unmarshal(responseBody, &response); err != nil {
-		return nil, fmt.Errorf("failed to unmarshal response: %v", err)
+	if responseErr := json.Unmarshal(responseBody, &response); responseErr != nil {
+		return nil, fmt.Errorf("failed to unmarshal response: %v, body: %s", responseErr, responseBody)
 	}
 
 	if response.StatusCode != 200 {
