@@ -335,24 +335,19 @@ func (c *Client) CreateInfoRequest(input CreateInfoRequestInput) (*InfoRequest, 
 		return nil, fmt.Errorf("request failed with status %d: %s", resp.StatusCode, string(responseBody))
 	}
 
-	var response Response
-	if responseErr := json.Unmarshal(responseBody, &response); responseErr != nil {
-		return nil, fmt.Errorf("failed to unmarshal response: %v, body: %s", responseErr, responseBody)
-	}
-
-	if response.StatusCode != 200 {
-		return nil, fmt.Errorf("GDPR service returned error: %s, StatusCode: %v", response.Message, response.StatusCode)
+	if resp.StatusCode != 200 {
+		return nil, fmt.Errorf("GDPR service returned error: %s, StatusCode: %v", resp.Body, resp.StatusCode)
 	}
 
 	// Convert response.Data to InfoRequest
-	dataJSON, err := json.Marshal(response.Data)
+	dataJSON, err := json.Marshal(resp.Body)
 	if err != nil {
 		return nil, fmt.Errorf("failed to marshal data: %v", err)
 	}
 
 	var infoRequest InfoRequest
-	if err := json.Unmarshal(dataJSON, &infoRequest); err != nil {
-		return nil, fmt.Errorf("failed to unmarshal data: %v", err)
+	if jsonErr := json.Unmarshal(dataJSON, &infoRequest); err != nil {
+		return nil, fmt.Errorf("failed to unmarshal data: %v", jsonErr)
 	}
 
 	return &infoRequest, nil
