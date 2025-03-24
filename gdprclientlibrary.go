@@ -140,35 +140,37 @@ type DeleteRequest struct {
 
 // CreateInfoRequestInput is the input for creating an info request
 type CreateInfoRequestInput struct {
-	PartitionKey string `json:"partitionKey"`
+	PartitionKey string `json:"partition_key"`
 	Type         string `json:"type"`
-	CreatedBy    string `json:"createdBy"`
-	ApiKey       string `json:"apiKey,omitempty"`
+	CreatedBy    string `json:"created_by"`
+	ApiKey       string `json:"api_key,omitempty"`
 }
 
 // CreateDeleteRequestInput is the input for creating a deletion request
 type CreateDeleteRequestInput struct {
-	PartitionKey string `json:"partitionKey"`
+	PartitionKey string `json:"partition_key"`
 	Type         string `json:"type"`
-	CreatedBy    string `json:"createdBy"`
-	ApiKey       string `json:"apiKey,omitempty"`
+	CreatedBy    string `json:"created_by"`
+	ApiKey       string `json:"api_key,omitempty"`
 }
 
 // FetchRequestInput is the input for fetching a request
 type FetchRequestInput struct {
-	PartitionKey string `json:"partitionKey"`
-	RangeKey     string `json:"rangeKey"`
-	ApiKey       string `json:"apiKey,omitempty"`
+	PartitionKey string `json:"partition_key"`
+	RangeKey     string `json:"range_key"`
+	ApiKey       string `json:"api_key,omitempty"`
 }
 
 // UpdateRequestInput is the input for updating a request
 type UpdateRequestInput struct {
-	PartitionKey string `json:"partitionKey"`
-	RangeKey     string `json:"rangeKey"`
+	PartitionKey string `json:"partition_key"`
+	RangeKey     string `json:"range_key"`
 	Type         string `json:"type,omitempty"`
 	Status       string `json:"status,omitempty"`
-	ApiKey       string `json:"apiKey,omitempty"`
+	ApiKey       string `json:"api_key,omitempty"`
 }
+
+// TODO March 24, 2025 Correct the camelcase and make them underscore
 
 // ShouldRetry determines if a request should be retried based on the status code and error
 func ShouldRetry(statusCode int, err error) bool {
