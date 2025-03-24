@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log"
 	"math"
 	"math/rand"
 	"net/http"
@@ -339,17 +340,11 @@ func (c *Client) CreateInfoRequest(input CreateInfoRequestInput) (*InfoRequest, 
 		return nil, fmt.Errorf("GDPR service returned error: %s, StatusCode: %v", resp.Body, resp.StatusCode)
 	}
 
-	// Convert response.Data to InfoRequest
-	dataJSON, err := json.Marshal(resp.Body)
-	if err != nil {
-		return nil, fmt.Errorf("failed to marshal data: %v", err)
-	}
-
+	log.Printf("GDPRClientLibrary.CreateInfo - Response Body: %s", string(responseBody))
 	var infoRequest InfoRequest
-	if jsonErr := json.Unmarshal(dataJSON, &infoRequest); err != nil {
+	if jsonErr := json.Unmarshal(responseBody, &infoRequest); err != nil {
 		return nil, fmt.Errorf("failed to unmarshal data: %v", jsonErr)
 	}
-
 	return &infoRequest, nil
 }
 
